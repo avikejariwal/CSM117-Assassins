@@ -1,0 +1,29 @@
+<img class="start_page_img" src='img/bg_image.9.png'/>
+<div class="join_game_form">
+	<form >
+	Username: <input type="text" ng-model="username"/><br/>
+	Available Games:
+	<table class="games_table">
+	<tr>
+		<td> </td>
+		<td> Name</td>
+		<td> Owner</td>
+		<td> Players (max 6)</td>
+	</tr>
+	<tr ng-repeat="game in games">
+		<td>{{$index+1}}</td>
+		<td>{{game.game_Name}}</td>
+		<td>{{game.game_Owner}}</td>
+		<td>{{game.num_Users}}</td>
+		<td><button type="submit" class="joinButton" ng-click="joinGame(username, game.game_Name)">Join</button></td>
+	</tr>
+
+	</table>
+	
+	</form>
+ 	
+</div>
+
+	
+
+</div>

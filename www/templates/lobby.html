@@ -1,0 +1,21 @@
+<img class="start_page_img" src='img/bg_image.9.png'/>
+<div class="lobby_page_text">
+	<h1>Welcome to the Lobby<h1>
+	<h2> {{game.num_Users}}/6 have joined</h2>
+	<h3> (Min. 2) </h3>
+	<table class="games_table">
+	<tr>
+		<td> </td>
+		<td> Name</td>
+		<td> Dead/Aive</td>
+	</tr>
+	<tr ng-repeat="user in users">
+		<td>{{$index+1}}</td>
+		<td>{{user.username}}</td>
+		<td>{{user.alive}}</td>
+	</tr>
+	</table>
+	<button ng-show="canStart" ng-click="startGame()">Start Game</button>
+	<button ng-click="leaveGame()" href="asdasd">Leave Game</button>
+</div>
+

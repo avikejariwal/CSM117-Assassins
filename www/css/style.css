@@ -1,0 +1,160 @@
+/* Empty. Add your own CSS if you like */
+.start_page_text{
+	position:fixed;
+	top:20%;
+	padding:25px;
+	border-style: solid;
+}
+
+.start_page_text h1{
+	font-size: 350%;
+	color:white;
+}
+.start_page_text h2{
+	color:white;
+	font-size: 120%;
+	text-align: center;
+}
+.start_page_img{
+	position: static;
+	z-index: -1;
+}
+
+.start_page_img_icon{
+	position:fixed;
+	padding:8px;
+	top:0%;
+	right:0%;
+	max-height: 75px;
+}
+
+.start_page_buttons{
+	position:fixed;
+	top:50%;
+	left:12%;
+}
+
+.start_page_button {
+	width:100%;
+	font-size: 15px;
+	font-weight: bold;
+	height:50px;
+	margin: 4px;
+	border-style: solid;
+	border-radius: 25px;
+	border-width: 3px;
+}
+
+.new_game{
+	background-color: transparent;
+	color:white;
+}
+
+.join_game{
+	background-color: white;
+	color: rgba(0, 0, 0, 0.5);
+} 
+
+.new_game_form {
+	font-size:30px;
+	color:white;
+	width:100%;
+	position:fixed;
+	top:10%;
+	left:15%;
+}
+
+.new_game_form input{
+	color:white;
+	text-align: center;
+	font-size: 30px;
+	height:50px;
+	border-color:white;
+	border-style: solid;
+	border-width: 5px;
+	border-radius:25px;
+	background-color: transparent;
+	width:60%;
+	margin:10px;
+}
+.new_game_form button{
+	color:rgba(0, 0, 0, 0.5);
+	text-align: center;
+	font-size: 30px;
+	height:50px;
+	border-color:white;
+	border-style: solid;
+	border-width: 5px;
+	border-radius:22px;
+	background-color: white;
+	width:60%;
+	margin:10px;
+}
+
+.join_game_form {
+	font-size:30px;
+	color:white;
+	width:100%;
+	position:fixed;
+	top:10%;
+	text-align: center;
+}
+
+.join_game_form input{
+	position: relative;
+	margin-top:5px;
+	left:20%;
+	color:white;
+	text-align: center;
+	font-size: 30px;
+	height:50px;
+	border-color:white;
+	border-style: solid;
+	border-width: 5px;
+	border-radius:25px;
+	background-color: transparent;
+	width:60%;
+}
+
+table, th , td {
+	margin-left: 10px;
+	text-align: center;
+	margin-top: 10px;
+	font-size: 21px;
+	padding:5px;
+  	border: 1px solid grey;
+}
+table tr:nth-child(odd) {
+  background-color: transparent;
+  color:white;
+}
+table tr:nth-child(even) {
+  background-color: #ffffff;
+  color:rgba(0, 0, 0, 0.5);
+}
+
+.joinButton {
+	border-style: solid;
+	border-radius: 15px;
+	font-size: 13px !important;
+}
+
+.lobby_page_text {
+	position: fixed;
+	top:10%;
+	left:4%;
+	text-align: center;
+	color: white
+}
+
+.lobby_page_text button {
+	color: rgba(0, 0, 0, 0.5);
+	border-style: solid;
+	border-radius: 15px;
+	font-weight: bold;
+	font-size: 20px !important;
+}
+
+
+
+
