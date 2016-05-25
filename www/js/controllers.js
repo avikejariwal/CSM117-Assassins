@@ -31,8 +31,9 @@ angular.module('starter.controllers', [])
     //console.log(game_key);
     var user_key = games.child(game_key.toString()).child('users').push(user); 
     games.child(game_key).child('num_Users').set(1);
+    games.child(game_key).child('game_Started').set(false);
     GameInfo.setUserInfo(username);
-    GameInfo.setGameInfo(gameName, game_key);
+    GameInfo.setGameInfo(gameName, game_key, username);
     $state.go('lobby');
   };
 })
@@ -82,14 +83,18 @@ angular.module('starter.controllers', [])
   var gamename = info[1];
   var gamekey = info[2];
   var targetname = info[3];
+  var gameowner = info[4];
   $scope.canStart = false;
+  var isOwner = false;
+  if (username == gameowner)
+    isOwner = true;
 
   var fb_game = firebase.database().ref().child('games').child(gamekey);
   fb_game.on('value', function(snapshot){
     $scope.game = snapshot.val();
     console.log($scope.game);
     $scope.users = $scope.game['users'];
-    if ($scope.game.num_Users >= 2) {
+    if ($scope.game.num_Users >= 2 ){//&& isOwner) {
       $scope.canStart = true;
     }
   });
@@ -100,11 +105,20 @@ angular.module('starter.controllers', [])
   }
 
   $scope.startGame = function() {
-    console.log("game started");
-      $state.go('gamePage');
-  }
+      fb_game.child('game_Started').set(true);
+      var keysList = Object.keys($scope.users);
+      var num_users = $scope.game.num_Users
 
-  console.log($scope.users);
+      for (var i = 0 ; i < num_users ; i++)
+      {
+          var temp = Math.floor((Math.random() * (num_users-1)) + 0);
+          while (temp==i)
+              temp = Math.floor((Math.random() * (num_users-1)) + 0);
+          console.log(keysList[temp]);
+      }
+      console.log("game started");
+     // $state.go('gamePage');
+  }
 })
 
 

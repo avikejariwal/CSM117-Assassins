@@ -74,6 +74,8 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
         }
       }
     })
+
+
   .state('gamePage.tableView', {
       url: 'gamePage/tableView',
       views: {
@@ -86,6 +88,6 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
 
   // if none of the above states are matched, use this as the fallback
-  //$urlRouterProvider.otherwise('/startPage');
+  $urlRouterProvider.otherwise('/startPage');
 
 });
