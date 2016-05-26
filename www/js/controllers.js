@@ -153,6 +153,7 @@ angular.module('starter.controllers',[])
 
 
 .controller('gamePageCtrl', function($cordovaGeolocation, $state, $scope, GameInfo, $interval) {
+
       $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh5Yp1llOnhkQvSZs6wIE9lRU8IL_Gb3Y";
       var gameInfo = GameInfo.getGameInfo();
       var userKey, gameKey, targetKey;
@@ -167,30 +168,71 @@ angular.module('starter.controllers',[])
         targetKey = gameInfo[2];
       }
 
-      
-      function getPos(){
-        $cordovaGeolocation.getCurrentPosition().then(function(position){
-        console.log('getting location');
-        var user_lat = position.coords.latitude;
-        var user_long = position.coords.longitude;
-        fb_user.child('position').child('lat').set(user_lat);
-        fb_user.child('position').child('long').set(user_long);
-        console.log(user_lat + ' ' + user_long);
-        map = new google.maps.Map(document.getElementById('map'), {
-          center: {lat:user_lat, lng: user_long},
-          zoom: 14
-        });
-      });
-      console.log('getting Pos');
-      };
-      getPos();
-
-      $interval(getPos, 300000);
-
       var fb_game = firebase.database().ref().child('games').child(gameKey);
       var fb_user = fb_game.child('users').child(userKey);
       var fb_target = fb_game.child('users').child(targetKey);
-      var user_lat, user_long, map;
+      var user_lat, user_long, target_pos, map;
+
+
+      function getPos(){
+        $cordovaGeolocation.getCurrentPosition().then(function(position){
+          console.log('getting location');
+          var user_lat = position.coords.latitude;
+          var user_long = position.coords.longitude;
+          fb_user.child('position').child('lat').set(user_lat);
+          fb_user.child('position').child('long').set(user_long);
+          console.log(user_lat + ' ' + user_long);
+          var user_marker = new google.maps.Marker({
+              position: {lat: user_lat, lng: user_long},
+              map: map,
+              title: 'Kill here',
+            });
+        });
+      };
+      var skull_icon = {
+        url: 'img/skull_icon.9.png',
+        scaledSize: new google.maps.Size(50,50),
+      }
+
+
+      
+
+      function getTargetPos(){
+        fb_target.on('value', function(snapshot){
+          var target = snapshot.val();
+          if (!("position" in target)){
+            console.log("User hasn't started yet");
+            return;
+          }
+          else{
+            target_pos = target['position'];
+            var targetLatLong = {lat: target_pos['lat'], lng: target_pos['long']};            console.log(targetLatLong);
+            console.log(target_pos['lat']);
+              map = new google.maps.Map(document.getElementById('map'), {
+              center: targetLatLong,
+              zoom: 16
+             });
+            var target_marker = new google.maps.Marker({
+              position: targetLatLong,
+              map: map,
+              icon: skull_icon,
+              title: 'Kill here',
+            });
+
+            var kill_radius = new google.maps.Circle({
+              strokeColor: '#000000',
+              strokeWeight: 5,
+              radius: 200,
+              map: map,
+              center: targetLatLong
+      })
+          } 
+        });
+      }
+      getPos();
+      getTargetPos();
+
+      $interval(getTargetPos, 300000);
 
 
       
