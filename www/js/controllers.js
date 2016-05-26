@@ -13,6 +13,7 @@ angular.module('starter.controllers',[])
 })
 
 .controller('newGameCtrl', function($state, $scope, GameInfo){
+
   $scope.createGame = function(username, gameName){
     console.log("create game called");
     var games  = firebase.database().ref().child('games');
@@ -26,11 +27,12 @@ angular.module('starter.controllers',[])
       game_Owner: username,
       num_Users: 1,
     };
-    var usrName = username
+
     var game_key = games.push(game).key;
 
-    //console.log(game_key);
-    var user_key = games.child(game_key.toString()).child('users').push(user); 
+    console.log(game_key);
+    var user_key = games.child(game_key).child('users').push(user).key; 
+    console.log(user_key);
     games.child(game_key).child('num_Users').set(1);
     games.child(game_key).child('game_Started').set(false);
     GameInfo.setUserInfo(user_key);
@@ -71,21 +73,23 @@ angular.module('starter.controllers',[])
           console.log(temp);
           fb_games.child(key).child('num_Users').set(temp+1);
           console.log(true);
+          break;
       }
     }
     GameInfo.setUserInfo(user_key);
-    GameInfo.setGameInfo(game_key);
+    GameInfo.setGameInfo(key);
     $state.go('lobby');
   };
 })
 
 .controller('lobbyCtrl', function($state, $scope, GameInfo) {
+
   var info = GameInfo.getGameInfo();
   var userkey = info[0];
   var gamekey = info[1];
   $scope.canStart = false;
   var isOwner = false;
-
+  console.log(gamekey);
   var fb_game = firebase.database().ref().child('games').child(gamekey);
 
   fb_game.on('value', function(snapshot){
@@ -148,32 +152,46 @@ angular.module('starter.controllers',[])
 })
 
 
-.controller('gamePageCtrl', function($cordovaGeolocation, $state, $scope, GameInfo) {
+.controller('gamePageCtrl', function($cordovaGeolocation, $state, $scope, GameInfo, $interval) {
       $scope.googleMapsUrl="https://maps.googleapis.com/maps/api/js?key=AIzaSyCh5Yp1llOnhkQvSZs6wIE9lRU8IL_Gb3Y";
       var gameInfo = GameInfo.getGameInfo();
       var userKey, gameKey, targetKey;
-
-      if (gameInfo.length == 0) {
-          userKey = '-KIeRBzWhdl336BsEXp3';
-          gameKey = '-KIeRBzQL9ZEFlNfVmsK';
-          targetKey = '-KIeREqwpeOVmIWHdjJo';
+      if (gameInfo.length[0] == null ) {
+          userKey = '-KIemejwHKZeMr6XpSZM';
+          gameKey = '-KIemejp1X7RWMoXao84';
+          targetKey = '-KIemgfWwUh_iyDVLAxn';
       }
       else {
         userKey = gameInfo[0];
         gameKey = gameInfo[1];
         targetKey = gameInfo[2];
       }
-       var user_lat, user_long, map;
 
-      $cordovaGeolocation.getCurrentPosition().then(function(position){
+      
+      function getPos(){
+        $cordovaGeolocation.getCurrentPosition().then(function(position){
+        console.log('getting location');
         var user_lat = position.coords.latitude;
         var user_long = position.coords.longitude;
+        fb_user.child('position').child('lat').set(user_lat);
+        fb_user.child('position').child('long').set(user_long);
         console.log(user_lat + ' ' + user_long);
         map = new google.maps.Map(document.getElementById('map'), {
           center: {lat:user_lat, lng: user_long},
-          zoom: 15
+          zoom: 14
         });
       });
+      console.log('getting Pos');
+      };
+      getPos();
+
+      $interval(getPos, 300000);
+
+      var fb_game = firebase.database().ref().child('games').child(gameKey);
+      var fb_user = fb_game.child('users').child(userKey);
+      var fb_target = fb_game.child('users').child(targetKey);
+      var user_lat, user_long, map;
+
 
       
 })

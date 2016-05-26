@@ -9,7 +9,7 @@ angular.module('starter.services', [])
     setUserInfo: function(username){
       userKey = username;
     },
-    setGameInfo: function(gamename, gamekey, gameowner){
+    setGameInfo: function(gamekey){
       gameKey = gamekey;
       return null
     },
