@@ -1,29 +1,24 @@
 angular.module('starter.services', [])
 
 .factory('GameInfo', function(){
-  var userName = null;
-  var gameName = null;
-  var targetName = null;
+  var userKey = null;
   var gameKey = null;
-  var gameOwner = null
+  var targetKey = null;
 
   return {
     setUserInfo: function(username){
-      userName = username;
-      return null
+      userKey = username;
     },
     setGameInfo: function(gamename, gamekey, gameowner){
-      gameName = gamename;
       gameKey = gamekey;
-      gameOwner = gameowner;
       return null
     },
     setTargetInfo: function(targetname) {
-      targetName = targetname;
+      targetKey = targetname;
       return null
     },
     getGameInfo: function(){
-      var game = [userName, gameName, gameKey, targetName, gameOwner];
+      var game = [userKey, gameKey, targetKey];
       return game;
     }
   };

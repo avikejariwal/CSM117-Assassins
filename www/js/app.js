@@ -5,7 +5,7 @@
 // the 2nd parameter is an array of 'requires'
 // 'starter.services' is found in services.js
 // 'starter.controllers' is found in controllers.js
-angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
+angular.module('starter', ['ionic', 'starter.controllers', 'starter.services', 'ngCordova'])
 
 .run(function($ionicPlatform) {
   $ionicPlatform.ready(function() {
@@ -58,33 +58,12 @@ angular.module('starter', ['ionic', 'starter.controllers', 'starter.services'])
 
     .state('gamePage', {
       url:'/gamePage',
-      templateUrl: 'templates/gamePage.html'
+      templateUrl: 'templates/gamePage.html',
+      controller: 'gamePageCtrl'
     }) 
 
 
   // Each tab has its own nav history stack:
-
-
-  .state('gamePage.mapView', {
-      url: 'gamePage/mapView',
-      views: {
-        'gamePage-mapView': {
-          templateUrl: 'templates/mapView.html',
-          controller: 'mapViewCtrl'
-        }
-      }
-    })
-
-
-  .state('gamePage.tableView', {
-      url: 'gamePage/tableView',
-      views: {
-        'gamePage-tableView': {
-          templateUrl: 'templates/tableView.html',
-          controller: 'tableViewCtrl'
-        }
-      }
-    })
 
 
   // if none of the above states are matched, use this as the fallback
